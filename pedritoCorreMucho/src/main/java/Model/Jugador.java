@@ -1,19 +1,16 @@
 package Model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Jugador {
 
     public int id;
     public String nombre;
-    public List<Carta> mazo;
+    public Mazo mazo;
     public int cantidadJugadores;
 
 
     public Jugador(int id, String nombre) {
         this.id = id;
-        mazo = new ArrayList<Carta>();
+        this.nombre = nombre;
     }
 
 
@@ -31,26 +28,22 @@ public class Jugador {
         return nombre;
     }
 
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-
     // Ver mazo jugador
-    public List<Carta> getMazo() {
+    public Mazo getMazo() {
         return mazo;
     }
 
-    public void setMazo(List<Carta> mazo) {
+    public void setMazo(Mazo mazo) {
         this.mazo = mazo;
-        this.mazo.addAll(mazo);
     }
 
-    public void deleteCardPlayer(Carta carta) {
-        this.mazo.remove(carta);
+    public void descartarCarta(Carta carta) {
+        this.mazo.removeCarta(carta);
     }
-
 
     public int getCantidadJugadores() {
         return cantidadJugadores;
@@ -62,7 +55,7 @@ public class Jugador {
     }
 
     public String toString() {
-        return "Jugador " + nombre + " identificado con el ID: " + id + "\n Este es tu mazo " + mazo + "\n\n Hay "+ cantidadJugadores + " en la partida";
+        return "Jugador " + nombre + " identificado con el ID: " + id + "\n Este es tu mazo " + mazo.getCartasMazo() + "\n\n Hay "+ cantidadJugadores + " jugadores en la partida";
     }
 
 }

@@ -8,7 +8,7 @@ public class Carta {
     public String nombre;
     public String tipo;
 
-    public Carta(String nombre, String tipo) {
+    public Carta(String tipo, String nombre) {
         this.nombre = nombre;
         this.tipo = tipo;
     }

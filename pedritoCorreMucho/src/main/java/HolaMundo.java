@@ -1,21 +1,12 @@
-import Model.Carta;
-import Model.CartasRuta;
-import Model.Mazo;
+import Controller.Controlador;
 
 public class HolaMundo {
-
-
-
+    
     public static void main(String[] args) {
 
-        Mazo mazo = new Mazo();
+        Controlador vamosPedrito = new Controlador();
 
-        mazo.addAllCartas(CartasRuta.crearCartas());
-
-        for (Carta carta : mazo.getCartasMazo()) {
-            System.out.println("Tipo: " + carta.getNombre() + ", Descripción: " + carta.getTipo());
-        }
+        vamosPedrito.pedritoCorreExcesivamenteMucho();
 
     }
-
 }

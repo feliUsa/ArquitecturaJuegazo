@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Reglas {
@@ -7,13 +9,14 @@ public class Reglas {
     public static int calcularPuntaje(List<Carta> cartasJugadas) {
         int puntaje = 0;
         for (Carta carta : cartasJugadas) {
-            if (carta.getTipo().equals("Distancia")) {
-                puntaje += Integer.parseInt(carta.getTipo().split(" ")[0]);
+            String[] partes = carta.getTipo().split(" ");
+            if (partes.length > 1) {
+                puntaje += Integer.parseInt(partes[1]);
             }
         }
         return puntaje;
     }
-
+    
     // si tienes las cuatro cartas de seguridad te suman 800km
     public static int recogeSeguridad(List<Carta> cartasJugadas, int distanciaTotal) {
         int contadorSeguridad = 0;
@@ -30,58 +33,82 @@ public class Reglas {
         return distanciaTotal;
     }
 
-
-
-    // Siempre iniciar juego con siga
-    public static void iniciarJuego(List<Jugador> jugadores, Mazo mazo) {
-        for (Jugador jugador : jugadores) {
-            iniciarTurno(jugador, mazo); // Iniciar turno del jugador
-
-            // Verificar si el jugador tiene una carta "Siga"
-            boolean tieneSiga = false;
-            for (Carta carta : jugador.getMazo()) {
-                if (carta.getTipo().equals("Siga")) {
-                    tieneSiga = true;
-                    break;
-                }
+    // Metodos adicional para iniciar Juego
+    public static boolean tieneCartaSiga(List<Carta> cartasJugador) {
+        for (Carta carta : cartasJugador) {
+            if (carta.getTipo().equals("Solucion") && carta.getNombre().equals("Siga")) {
+                return true;
             }
+        }
+        return false;
+    }
 
-            // Si el jugador no tiene una carta "Siga", finalizar su turno para que tenga 6 cartas en su mano
-            if (!tieneSiga) {
-                finalizarTurno(jugador, mazo);
+
+
+    public static void iniciarJuego(List<Jugador> jugadores, Mazo mazo) {
+        List<Jugador> jugadoresConSiga = new ArrayList<>();
+
+        // Verificar qué jugadores tienen la carta "Siga"
+        for (Jugador jugador : jugadores) {
+            if (tieneCartaSiga(jugador.getMazo().getCartasMazo())) {
+                jugadoresConSiga.add(jugador);
+            }
+        }
+
+        // Si solo un jugador tiene la carta "Siga", ese jugador inicia el juego
+        if (jugadoresConSiga.size() == 1) {
+            Jugador jugadorQueInicia = jugadoresConSiga.get(0);
+            System.out.println(jugadorQueInicia.getNombre() + " tiene la carta 'Siga'. ¡El juego puede comenzar!");
+            iniciarTurno(jugadorQueInicia, mazo);
+        }
+        // Si hay más de un jugador con la carta "Siga", seleccionar uno aleatoriamente para iniciar el juego
+        else if (jugadoresConSiga.size() > 1) {
+            Collections.shuffle(jugadoresConSiga); // Mezclar la lista para seleccionar aleatoriamente
+            Jugador jugadorQueInicia = jugadoresConSiga.get(0); // Seleccionar el primer jugador de la lista
+            System.out.println(jugadorQueInicia.getNombre() + " tiene la carta 'Siga' y comenzará el juego.");
+            iniciarTurno(jugadorQueInicia, mazo);
+        }
+        // Si ningún jugador tiene la carta "Siga", continuar con el siguiente jugador en la lista
+        else {
+            for (Jugador jugador : jugadores) {
+                iniciarTurno(jugador, mazo); // Iniciar turno del jugador
+                // Verificar si el jugador tiene una carta "Siga" en su mazo
+                boolean tieneSiga = tieneCartaSiga(jugador.getMazo().getCartasMazo());
+                // Si el jugador no tiene una carta "Siga", descartar una carta y finalizar su turno
+                if (!tieneSiga) {
+                    Mazo.descartarUnaCarta(jugador, mazo); // Descartar una carta del jugador
+                    finalizarTurno(jugador, mazo);
+                }
             }
         }
     }
 
     // Siempre al iniciar turno debe de coger una carta
     public static void iniciarTurno(Jugador jugador, Mazo mazo) {
-        // Obtener la lista de cartas en la mano del jugador
-        List<Carta> manoJugador = jugador.getMazo();
-
         // Verificar si el jugador tiene menos de 7 cartas en su mano
-        int cartasFaltantes = 7 - manoJugador.size();
-        if (cartasFaltantes > 0) {
-            // Repartir una carta adicional al jugador desde el mazo
+        if (jugador.getMazo().size() < 7) {
+            // Repartir cartas adicionales al jugador desde el mazo
+            int cartasFaltantes = 7 - jugador.getMazo().size();
             List<Carta> nuevasCartas = mazo.repartir(cartasFaltantes);
-            jugador.setMazo(nuevasCartas);
+            
+            // Añadir las nuevas cartas al mazo del jugador
+            for (Carta carta : nuevasCartas) {
+                jugador.getMazo().addCarta(carta);
+                System.out.println("\n\n\n¡" + jugador.getNombre() + ", se te añadió la carta '" + carta.getNombre() + "'!");
+            }
         }
     }
-
+    
+    
     // Siempre al finalizar turno debe de tener 6 cartas
     public static void finalizarTurno(Jugador jugador, Mazo mazo) {
-        // Obtener la lista de cartas en la mano del jugador
-        List<Carta> manoJugador = jugador.getMazo();
-
         // Verificar si el jugador tiene más de 6 cartas en su mano
-        int cartasSobrantes = manoJugador.size() - 6;
-        if (cartasSobrantes > 0) {
-            // Descartar cartas adicionales del jugador
-            List<Carta> cartasDescartadas = manoJugador.subList(6, manoJugador.size());
-            jugador.setMazo(manoJugador.subList(0, 6)); // Mantener solo las primeras 6 cartas en la mano
-            // Las cartas descartadas vuelven al mazo
-            mazo.addAllCartas(manoJugador);
+        if (jugador.getMazo().size() > 6) {
+            System.out.println("El jugador " + jugador.getNombre() + " tiene más de 6 cartas en su mano. Debe descartar una carta.");
+            Mazo.descartarUnaCarta(jugador, mazo);
         }
     }
+    
 
 
     // Siempre despues de colocar una carta solucion se debe colocar un siga
@@ -249,36 +276,65 @@ public class Reglas {
         // Verificar si la lista de cartas jugadas no está vacía
         if (!cartasJugadas.isEmpty()) {
             // Verificar si el jugador ha jugado la carta "Prioridad de paso"
+            boolean tienePrioridadDePaso = false;
             for (Carta carta : cartasJugadas) {
                 if (carta.getTipo().equals("Seguridad") && carta.getTipo().equals("Prioridad de paso")) {
-                    return false; // El jugador ha jugado "Prioridad de paso", no puede recibir "Inicio de límite de velocidad a 50"
-                }
-            }
-
-            // Si el jugador no ha jugado "Prioridad de paso", verificar si ha recibido "Inicio de límite de velocidad a 50"
-            boolean haRecibidoInicioVelMaxima50 = false;
-            for (Carta carta : cartasJugadas) {
-                if (carta.getTipo().equals("Problema") && carta.getTipo().equals("Inicio de limite de velocidad a 50")) {
-                    haRecibidoInicioVelMaxima50 = true;
+                    tienePrioridadDePaso = true;
                     break;
                 }
             }
-
-            // Si ha recibido "Inicio de límite de velocidad a 50", entonces solo puede jugar "Fin de límite de velocidad a 50", "Distancia de 25 km" o "Distancia de 50 km"
-            if (haRecibidoInicioVelMaxima50) {
+    
+            // Si el jugador ha jugado "Prioridad de paso", no puede recibir "Inicio de límite de velocidad a 50"
+            if (tienePrioridadDePaso) {
+                return true;
+            } else {
+                // Si el jugador no ha jugado "Prioridad de paso", verificar si ha recibido "Inicio de límite de velocidad a 50"
+                boolean haRecibidoInicioVelMaxima50 = false;
                 for (Carta carta : cartasJugadas) {
-                    if ((carta.getTipo().equals("Solucion") && carta.getTipo().equals("Fin de limite de velocidad a 50")) ||
-                            (carta.getTipo().equals("Distancia") && (carta.getTipo().equals("25 km") || carta.getTipo().equals("50 km")))) {
-                        return true; // El jugador tiene una carta válida para jugar después de "Inicio de límite de velocidad a 50"
+                    if (carta.getTipo().equals("Problema") && carta.getTipo().equals("Limite de velocidad 50 km")) {
+                        haRecibidoInicioVelMaxima50 = true;
+                        break;
                     }
                 }
-                return false; // El jugador ha recibido "Inicio de límite de velocidad a 50" pero no tiene una carta válida para jugar
+    
+                // Si ha recibido "Inicio de límite de velocidad a 50", entonces solo puede jugar "Fin de límite de velocidad a 50", "Distancia de 25 km" o "Distancia de 50 km"
+                if (haRecibidoInicioVelMaxima50) {
+                    for (Carta carta : cartasJugadas) {
+                        if ((carta.getTipo().equals("Solucion") && carta.getTipo().equals("Fin limite de velocidad 50 km")) ||
+                                (carta.getTipo().equals("Distancia") && (carta.getTipo().equals("25 km") || carta.getTipo().equals("50 km")))) {
+                            return true; // El jugador tiene una carta válida para jugar después de "Inicio de límite de velocidad a 50"
+                        }
+                    }
+                    return false; // El jugador ha recibido "Inicio de límite de velocidad a 50" pero no tiene una carta válida para jugar
+                } else {
+                    // Si el jugador no ha recibido "Inicio de límite de velocidad a 50", verificar si ha jugado "Fin de límite de velocidad a 50"
+                    boolean haJugadoFinVelMaxima50 = false;
+                    for (Carta carta : cartasJugadas) {
+                        if (carta.getTipo().equals("Solucion") && carta.getTipo().equals("Fin limite de velocidad 50 km")) {
+                            haJugadoFinVelMaxima50 = true;
+                            break;
+                        }
+                    }
+                    
+                    // Si ha jugado "Fin de límite de velocidad a 50", no hay restricciones
+                    if (haJugadoFinVelMaxima50) {
+                        return true;
+                    } else {
+                        // Si no ha jugado "Fin de límite de velocidad a 50", solo puede jugar cartas de "Distancia de 25 km" o "Distancia de 50 km"
+                        for (Carta carta : cartasJugadas) {
+                            if (carta.getTipo().equals("Distancia") && (carta.getTipo().equals("25 km") || carta.getTipo().equals("50 km"))) {
+                                return true; // El jugador puede jugar cartas de distancia válidas
+                            }
+                        }
+                        return false; // El jugador no ha jugado "Fin de límite de velocidad a 50", y no tiene una carta válida de distancia para jugar
+                    }
+                }
             }
         }
-
-        return true; // El jugador puede recibir "Inicio de límite de velocidad a 50" si no ha jugado "Prioridad de paso" o no ha recibido "Inicio de límite de velocidad a 50" antes
+    
+        // Si la lista de cartas jugadas está vacía, no hay restricciones
+        return true;
     }
-
 
 
     public static boolean validarStop(List<Carta> cartasJugadas) {
