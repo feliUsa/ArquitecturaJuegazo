@@ -1,0 +1,171 @@
+body {
+    /*background-image: url("../Front/imagenes_fondo_juego/Fondo.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;*/
+    background-color: #080808;
+    margin: 0;
+    padding: 0;
+}
+
+.barra {
+    background: linear-gradient(to right, #ffcc00, #ff6600,#ff3300);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 1840px;
+    height: 80px;
+    color: #080808;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    border-radius: 10px
+}
+
+.barra button {
+    background-color: #ffffff;
+    color: #080808;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: "Arial", sans-serif;
+    font-style: inherit;
+    cursor: pointer;
+}
+
+.tablero {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    width: 1150px; 
+    height: 800px; 
+    margin: 0 auto;
+    background-image: url("../imagenes_fondo_juego/Fondo.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 110px; 
+    border-radius: 20px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+.cartas-jugador {
+    position: relative;
+    height: 200px;
+    width: 690px;
+    background-color: rgba(49, 53, 53, 0.486);
+    border-radius: 20px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+.carta {
+    height: 140px;
+    width: 90px;
+    background-color: rgba(67, 70, 70, 0.397);
+    border: 1px solid black;
+    border-radius: 20px;
+    margin-right: 5px;
+}
+
+.player1 {
+    bottom: -570px; 
+    left: 30px;
+}
+
+.player2 {
+    top: 30px; 
+    right: 280px; 
+}
+
+.mazo {
+    position: relative;
+    bottom: -320px;
+    right: 1900px;
+    height: 140px;
+    width: 90px;
+    background-color: rgba(49, 53, 53, 0.486);
+    border-radius: 20px;
+}
+
+.area-juego {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative;
+    top: 250px;
+    left: -1000px;
+    background-color: rgba(49, 53, 53, 0.486);
+    border-radius: 20px;
+    height: 300px;
+    width: 600px;
+}
+  
+.seguridad1{/*Esquina inferior izquierda para seguridad del jugador 1*/
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  height: 140px;
+  width: 90px;
+  background-color: rgba(80, 87, 87, 0.397);
+  border: 1px solid black;
+  border-radius: 20px;
+}
+.carta1 {/*Esquina inferior izquierda, lado derecho, para jugar carta del jugador 1*/
+    position: absolute;
+    bottom: 0px;
+    left: 120px;
+    height: 140px;
+    width: 90px;
+    background-color: rgba(80, 87, 87, 0.397);
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+.problema1{
+    position: absolute;
+    bottom: 0px;
+    left: 240px;
+    height: 140px;
+    width: 90px;
+    background-color: rgba(80, 87, 87, 0.397);
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+.seguridad2{/*Esquina superior derecha para seguridad del jugador 2*/
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 140px;
+    width: 90px;
+    background-color: rgba(80, 87, 87, 0.397);
+    border: 1px solid black;
+    border-radius: 20px;
+}
+.carta2 {/*Esquina superior derecha, lado izquierdo, para jugar carta del jugador 2*/
+    position: absolute;
+    top: 0px;
+    right: 120px;
+    height: 140px;
+    width: 90px;
+    background-color: rgba(80, 87, 87, 0.397);
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+.problema2{
+    position: absolute;
+    top: 0px;
+    right: 240px;
+    height: 140px;
+    width: 90px;
+    background-color: rgba(80, 87, 87, 0.397);
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
