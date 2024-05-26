@@ -1,0 +1,51 @@
+body,
+html {
+    background-image: linear-gradient(to bottom right, #f81414, #f06a11, #f0b511, #f7f1ed);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+    /* Añadido para ocupar toda la altura de la ventana */
+}
+
+.navbar {
+    background-color: #000000;
+    color: #fff;
+    padding: 30px;
+    text-align: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    /* Añadido para hacer los bordes de la barra redondos */
+}
+
+.title {
+    margin: 0;
+    font-size: 40px;
+}
+
+.container {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100% - 50px);
+    /* Resta el alto de la barra superior */
+}
+
+button {
+    padding: 20px 20px;
+    margin: 20px;
+    font-size: 16px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

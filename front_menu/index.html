@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menú</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script> <!-- Incluye el archivo JavaScript -->
 </head>
+
 <body>
     <div class="navbar">
-        <h1 class="title">Pedro Corre Mucho</h1>
-      </div>
+        <h1 class="title">Ruta</h1>
+    </div>
     <div class="container">
         <button>Buscar Partida</button>
-        <button>Cerrar sesion</button>
-    </div>   
+        <button onclick="logout()" > Cerrar Sesion </button>
+        <button onclick="config()">Configurar Perfil</button>
+        <button>Historial de Partidas</button>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
