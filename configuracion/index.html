@@ -3,12 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>configuracion</title>
+    <title>Configuración</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-
 </head>
 <body>
-    
+    <div class="navbar">
+        <h1 class="title">Configuración de Usuario</h1>
+    </div>
+    <div class="container">
+        <form id="updateForm" class="form">
+            <div class="form-group">
+                <label for="currentUsername">Usuario Actual:</label>
+                <input type="text" id="currentUsername" name="currentUsername" disabled>
+            </div>
+            <div class="form-group">
+                <label for="currentEmail">Email Actual:</label>
+                <input type="email" id="currentEmail" name="currentEmail" disabled>
+            </div>
+            <div class="form-group">
+                <label for="username">Nuevo Usuario:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Nuevo Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Nueva Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Actualizar Datos</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>

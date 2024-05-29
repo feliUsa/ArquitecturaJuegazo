@@ -8,7 +8,6 @@ html {
     padding: 0;
     overflow: hidden;
     height: 100%;
-    /* Añadido para ocupar toda la altura de la ventana */
 }
 
 .navbar {
@@ -18,7 +17,6 @@ html {
     text-align: center;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    /* Añadido para hacer los bordes de la barra redondos */
 }
 
 .title {
@@ -32,12 +30,41 @@ html {
     justify-content: center;
     align-items: center;
     height: calc(100% - 50px);
-    /* Resta el alto de la barra superior */
+}
+
+.form {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* Ancho máximo del formulario */
+    box-sizing: border-box;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left; /* Alinear etiquetas a la izquierda */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box; /* Asegurarse de que el padding se incluya en el ancho total */
 }
 
 button {
-    padding: 20px 20px;
-    margin: 20px;
+    padding: 10px 20px;
+    margin: 20px 0 0;
     font-size: 16px;
     border: none;
     background-color: #007bff;
