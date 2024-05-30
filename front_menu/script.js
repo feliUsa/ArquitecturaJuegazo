@@ -32,4 +32,8 @@ function config(){
     window.location.href = 'http://127.0.0.1:5500/configuracion/';
 }
 
+function search(){
+    window.location.href = 'http://127.0.0.1:5500/mesa/';
+}
+
 window.onload = checkJwtCookie;

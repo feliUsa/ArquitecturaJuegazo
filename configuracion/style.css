@@ -76,3 +76,20 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+/* Posicionamiento del botón en la parte inferior derecha */
+#bottomRightButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #007BFF; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#bottomRightButton:hover {
+    background-color: #0056b3; /* Color de fondo del botón al pasar el ratón por encima */
+}
